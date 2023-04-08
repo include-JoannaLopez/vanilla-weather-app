@@ -43,9 +43,19 @@ function displayTemperature(response) {
   );
   iconElement.setAttribute("alt", response.data.weather[0].description);
 }
-let apiKey = "ff5c2727752d3bd5e355bd0aa961bdf0";
-let city = "San Antonio";
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-console.log(apiUrl);
+function search(city) {
+  let apiKey = "ff5c2727752d3bd5e355bd0aa961bdf0";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayTemperature);
+}
 
-axios.get(apiUrl).then(displayTemperature);
+function handleSubmit(event) {
+  event.preventDefault();
+  let cityInputElement = document.querySelector("#city-input");
+  search(cityInputElement.value);
+  console.log(cityInputElement.value);
+}
+search("San Antonio");
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
